@@ -94,6 +94,6 @@
     "vite-preset-react": "2.3.0",
     "vitest": "^0.34.5"
   },
-  "main": "./bin/generate-app.mjs",
+  "main": "index.js",
   "private": false
 }
