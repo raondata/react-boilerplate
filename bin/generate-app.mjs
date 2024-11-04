@@ -47,17 +47,17 @@ async function selectOptions() {
   ];
 
   // const answer = await inquirer.prompt(questions);
-  return [answer[questions[0].name], answer[questions[0].name][0] - 1];
+  // return [answer[questions[0].name], answer[questions[0].name][0] - 1];
 }
 
 async function main() {
   try {
-    const [type, number] = await selectOptions();
-    console.log(`You selected : ${type}`);
+    // const [type, number] = await selectOptions();
+    // console.log(`You selected : ${type}`);
 
     console.log('Downloading files...');
     execSync(
-      `git clone --depth 1 -b ${BRANCH_LIST[number]} --single-branch ${GIT_REPO} ${projectPath}`
+      `git clone --depth 1 -b ${BRANCH_LIST[0]} --single-branch ${GIT_REPO} ${projectPath}`
     );
 
     if (projectName !== '.') {
