@@ -1,6 +1,6 @@
 {
   "name": "create-raondata-react-boilerplate",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "react boilerplate use in raondata",
   "homepage": "git+https://github.com/raondata/react-boilerplate",
   "repository": "git+https://github.com/raondata/react-boilerplate",
@@ -94,6 +94,6 @@
     "vite-preset-react": "2.3.0",
     "vitest": "^0.34.5"
   },
-  "main": "generate-app.js",
+  "main": "./bingenerate-app.js",
   "private": false
 }
