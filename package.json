@@ -5,12 +5,15 @@
   "homepage": "https://github.com/raondata/kevas-smart-bill-client",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/raondata/kevas-smart-bill-client"
+    "url": "git+https://github.com/raondata/kevas-smart-bill-client.git"
   },
   "author": "raondata",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/raondata/kevas-smart-bill-client/issues"
+  },
+  "bin": {
+    "raondata-react-boilerplate": ""
   },
   "keywords": [
     "react",
@@ -93,5 +96,6 @@
     "vite": "^4.4.8",
     "vite-preset-react": "2.3.0",
     "vitest": "^0.34.5"
-  }
+  },
+  "main": "postcss.config.js"
 }
