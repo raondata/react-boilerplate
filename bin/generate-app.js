@@ -1,3 +1,5 @@
+#! /usr/bin/env node
+
 import { execSync } from 'child_process';
 import path from 'path';
 import fs from 'fs';
@@ -5,7 +7,7 @@ import fs from 'fs';
 if (process.argv.length < 3) {
   console.log('you have to provide a name to your app.');
   console.log('For example : ');
-  console.log('     npx create-raondata-react-boilerplate my-app');
+  console.log('     npx create-my-boilerplate my-app');
   process.exit(1);
 }
 
@@ -13,6 +15,7 @@ const projectName = process.argv[2];
 const currentPath = process.cwd();
 const projectPath = path.join(currentPath, projectName);
 const GIT_REPO = 'https://github.com/raondata/react-boilerplate.git';
+const BRANCH_LIST = ['main'];
 
 if (projectName !== '.') {
   try {
@@ -30,10 +33,32 @@ if (projectName !== '.') {
   }
 }
 
+async function selectOptions() {
+  const questions = [
+    {
+      type: 'list',
+      name: 'project options',
+      message: 'Choose an option: ',
+      choices: [
+        '1) [Atomic] Next.js + Emotion + Jest',
+        '2) [Atomic] Next.js + TailwindCSS + Jest',
+      ],
+    },
+  ];
+
+  // const answer = await inquirer.prompt(questions);
+  return [answer[questions[0].name], answer[questions[0].name][0] - 1];
+}
+
 async function main() {
   try {
-    console.log('Clone Repo...');
-    execSync(`git clone --depth 1 ${GIT_REPO} ${projectPath}`);
+    const [type, number] = await selectOptions();
+    console.log(`You selected : ${type}`);
+
+    console.log('Downloading files...');
+    execSync(
+      `git clone --depth 1 -b ${BRANCH_LIST[number]} --single-branch ${GIT_REPO} ${projectPath}`
+    );
 
     if (projectName !== '.') {
       process.chdir(projectPath);

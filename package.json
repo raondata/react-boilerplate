@@ -1,19 +1,13 @@
 {
-  "name": "raondata-react-boilerplate",
-  "version": "1.0.0",
-  "description": "kevas smart bill",
-  "homepage": "https://github.com/raondata/kevas-smart-bill-client",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/raondata/kevas-smart-bill-client.git"
-  },
+  "name": "create-raondata-react-boilerplate",
+  "version": "1.0.1",
+  "description": "react boilerplate use in raondata",
+  "homepage": "git+https://github.com/raondata/react-boilerplate",
+  "repository": "git+https://github.com/raondata/react-boilerplate",
   "author": "raondata",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/raondata/kevas-smart-bill-client/issues"
-  },
-  "bin": {
-    "raondata-react-boilerplate": ""
+    "url": "https://github.com/raondata/react-boilerplate/issues"
   },
   "keywords": [
     "react",
@@ -33,6 +27,9 @@
     "not dead",
     "not IE 11"
   ],
+  "bin": {
+    "create-raondata-react-boilerplate": "./bin/generate-app.js"
+  },
   "engines": {
     "node": ">=14",
     "yarn": ">=1.22.5"
@@ -97,5 +94,6 @@
     "vite-preset-react": "2.3.0",
     "vitest": "^0.34.5"
   },
-  "main": "postcss.config.js"
+  "main": "index.js",
+  "private": false
 }
