@@ -1,11 +1,17 @@
-import { Center } from '@chakra-ui/react';
+import { Box, Center, Flex } from '@chakra-ui/react';
 import { H1 } from '@components/texts';
 
 const MainPage = () => {
   return (
-    <Center>
-      <H1>Raondata Boilerplate Main page</H1>
-    </Center>
+    <Flex gap={2}>
+      <H1>Raondata Boilerplate 소개</H1>
+      <Box h="40" border={`1px solid red`}></Box>
+      <Box h="40" border={`1px solid red`}></Box>
+      <Box h="40" border={`1px solid red`}></Box>
+      <Box h="40" border={`1px solid red`}></Box>
+      <Box h="40" border={`1px solid red`}></Box>
+      <Box h="40" border={`1px solid red`}></Box>
+    </Flex>
   );
 };
 
