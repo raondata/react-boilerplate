@@ -3,7 +3,7 @@ import { Text, TextProps } from '@chakra-ui/react';
 const H2 = (props: TextProps) => {
   return (
     <Text
-      fontWeight={'bold'}
+      fontWeight={'black'}
       fontSize={{
         base: 'xl',
         '2xs': '1.2rem',

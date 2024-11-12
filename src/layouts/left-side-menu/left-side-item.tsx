@@ -2,13 +2,15 @@ import { MenuConfigType } from '@@types/component-props-types';
 import { Flex, Icon } from '@chakra-ui/react';
 import { H4 } from '@components/texts';
 import { FaChevronRight } from 'react-icons/fa6';
-import { useLocation } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 
 const LeftSideItem = ({ item }: { item: MenuConfigType }) => {
   const { pathname } = useLocation();
-  const focus = `/${pathname.split('/').pop()}` === item.link ? true : false;
+  const focus = `/${pathname.split('/').pop()}` === item.path ? true : false;
+  const navigate = useNavigate();
+
   return (
-    <Flex key={`menu-${item.text}`} px={1} boxSizing={'border-box'}>
+    <Flex key={`menu-${item.name}`} px={1} boxSizing={'border-box'}>
       <Flex
         rounded={'md'}
         flexDir={'row'}
@@ -22,9 +24,12 @@ const LeftSideItem = ({ item }: { item: MenuConfigType }) => {
         _hover={{
           bg: 'gray.600',
         }}
+        onClick={() => {
+          navigate(item.path);
+        }}
       >
         <Icon color={'gray.50'} as={item.icon} />
-        <H4 flex={1}>{item.text}</H4>
+        <H4 flex={1}>{item.name}</H4>
         <Icon as={FaChevronRight}></Icon>
       </Flex>
     </Flex>

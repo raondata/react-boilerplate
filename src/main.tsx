@@ -2,13 +2,18 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import { ChakraProvider, theme, extendTheme } from '@chakra-ui/react';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import {
+  createBrowserRouter,
+  RouteObject,
+  RouterProvider,
+} from 'react-router-dom';
 import LeftMenuLayout from '@layouts/left-menu-layout';
 import NotFoundPage from '@pages/not-found-page';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import MainPage from '@pages/main-page';
 import ErrorPage from '@pages/error-page';
 import extendedTheme from '@configs/chakra-config';
+import { mainMenuRouteConfig } from '@configs/route-config';
 
 const queryClient = new QueryClient();
 const basename = import.meta.env.VITE_BASE_URL;
@@ -26,12 +31,13 @@ const router = createBrowserRouter(
           <ErrorPage />
         </LeftMenuLayout>
       ),
-      children: [
-        {
-          path: `/`,
-          element: <MainPage />,
-        },
-      ],
+      children: mainMenuRouteConfig.map((d): RouteObject => {
+        return {
+          path: d.path,
+          element: d.element,
+          children: d.children,
+        };
+      }),
     },
     {
       element: <NotFoundPage />,

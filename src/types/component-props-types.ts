@@ -1,7 +1,7 @@
 import { IconType } from 'react-icons/lib';
 
 export type MenuConfigType = {
-  text: string;
-  link: string;
+  name?: string;
+  path: string;
   icon?: IconType;
 };

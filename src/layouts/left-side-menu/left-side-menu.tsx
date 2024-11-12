@@ -1,8 +1,8 @@
 import { Box, Flex, Icon } from '@chakra-ui/react';
 import { H2, H3, H4, H5 } from '@components/texts';
-import menuConfig from '@configs/menu-config';
 import { FaChevronRight } from 'react-icons/fa6';
 import LeftSideItem from './left-side-item';
+import { mainMenuRouteConfig } from '@configs/route-config';
 
 const LeftSideMenu = () => {
   return (
@@ -14,8 +14,8 @@ const LeftSideMenu = () => {
         </Flex>
         <Box w="full" h={0} borderBottom={`1px solid`} borderColor="bg"></Box>
         <Flex flexDir={'column'} gap={1}>
-          {menuConfig.map((m) => (
-            <LeftSideItem key={`menu-${m.text}`} item={m} />
+          {mainMenuRouteConfig.map((m) => (
+            <LeftSideItem key={`menu-${m.name}`} item={m} />
           ))}
         </Flex>
         <Flex
