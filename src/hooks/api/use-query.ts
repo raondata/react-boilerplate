@@ -1,7 +1,5 @@
-import useToken from '@hooks/token';
-import apiUtils from '@utils/api-utils';
 import { useQuery } from 'react-query';
-import { useSearchParams } from 'react-router-dom';
+import useRequest from './use-request';
 
 const useMyQuery = <T>({
   type = 'get',
@@ -12,21 +10,11 @@ const useMyQuery = <T>({
   url: string;
   params?: { [key: string]: any };
 }) => {
-  const token = useToken();
+  const requestFn = useRequest();
 
   const { data, isLoading, error, isError } = useQuery({
     queryKey: [type, url, JSON.stringify(params)],
-    queryFn: async () => {
-      if (type === 'get') {
-        const result = await apiUtils.get<T>({
-          url,
-          params,
-          token,
-        });
-
-        return result.data;
-      }
-    },
+    queryFn: async () => requestFn<T>({ url, type, params }),
     retry: false,
     refetchOnWindowFocus: false,
   });
