@@ -18,7 +18,8 @@ const useMyMutation = <T>({
     // queryKey: [type, url, JSON.stringify(params)],
     // mutationKey: [type, url, JSON.stringify(params)],
     mutationKey: [url, type],
-    mutationFn: async (params) => requestFn<T>({ url, params, type }),
+    mutationFn: async (params?: { [key: string]: string } | undefined) =>
+      requestFn<T>({ url, params, type }),
   });
 
   return { mutateAsync, isLoading };

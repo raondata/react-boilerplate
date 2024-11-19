@@ -1,7 +1,6 @@
 import { ApiRequestType } from '@@types/request-types';
 import { VITE_API_ENDPOINT } from '@configs/api-config';
 import axios from 'axios';
-import type { AxiosInterceptorManager, AxiosRequestConfig } from 'axios';
 const api = axios.create({
   baseURL: VITE_API_ENDPOINT,
 });
@@ -23,7 +22,6 @@ const request = async <T>({
   } else if (type === 'post' || type === 'put') {
     $data = { ...params };
   }
-
   return await api.request<T>({
     url: $url,
     method: type,
@@ -31,9 +29,48 @@ const request = async <T>({
     data: $data,
     headers: {
       Authorization: token && `Bearer ${token}`,
+      'Content-Type': !token
+        ? 'application/x-www-urlencoded'
+        : 'application/json',
+    },
+  });
+};
+
+const multipartRequest = async <T>({
+  url,
+  params,
+  token,
+}: ApiRequestType & { token?: string }) => {
+  return await api.request<T>({
+    url,
+    method: 'post',
+    data: params,
+    headers: {
+      Authorization: token && `Bearer ${token}`,
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+};
+
+const loginRequest = async <T>({
+  url,
+  params,
+}: ApiRequestType & { token?: string }) => {
+  // setToken(token);
+
+  const $url = url;
+  // params 전처리
+  let $data = {};
+
+  $data = { ...params };
+  return await api.request<T>({
+    url: $url,
+    method: 'post',
+    data: $data,
+    headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
     },
   });
 };
 
-export default { request };
+export default { request, multipartRequest, loginRequest };

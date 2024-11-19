@@ -1,8 +1,18 @@
-import { EnergyEfficiencyRatingType } from '@@types/field-types';
 import { atom, useAtom } from 'jotai';
+import { atomWithStorage } from 'jotai/utils';
 
-const energyEfficiencyRatingAtom = atom<
-  EnergyEfficiencyRatingType | undefined
->();
+const accessTokenAtom = atomWithStorage<string>('access-token', '', undefined, {
+  getOnInit: true,
+});
+const refreshTokenAtom = atomWithStorage<string>(
+  'refresh-token',
+  '',
+  undefined,
+  {
+    getOnInit: true,
+  }
+);
 
-export { energyEfficiencyRatingAtom };
+const refreshRequestAtom = atom<boolean>(false);
+
+export { accessTokenAtom, refreshTokenAtom, refreshRequestAtom };
