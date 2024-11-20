@@ -1,19 +1,26 @@
-import { ApiRequestType } from '@@types/request-types';
-import { useToast, createStandaloneToast } from '@chakra-ui/react';
+import { ApiRequestType, RequestHeaderType } from '@@types/request-types';
+import { createStandaloneToast } from '@chakra-ui/react';
 import useToken from '@hooks/token';
 import apiUtils from '@utils/api-utils';
-import { useEffect } from 'react';
+import { AxiosResponse } from 'axios';
 import { useNavigate } from 'react-router';
 
 const useRequest = () => {
   const navigate = useNavigate();
-  // const {
-  //   accessToken: token,
-  //   refreshFn,
-  //   refreshRequest,
-  //   setRefreshRequest,
-  // } = useToken();
+  const {
+    accessToken: token,
+    refreshFn,
+    refreshRequest,
+    setRefreshRequest,
+  } = useToken();
+
   const { toast } = createStandaloneToast();
+
+  const getRequestFn = (requestType?: RequestHeaderType) => {
+    if (requestType === 'multipart') return apiUtils.multipartRequest;
+    else if (requestType === 'login') return apiUtils.loginRequest;
+    else return apiUtils.request;
+  };
 
   const refreshTokenDeniedFn = () => {
     toast({
@@ -30,16 +37,17 @@ const useRequest = () => {
     });
   };
 
-  const requestFn = async <T>({
+  const executeRequest = async <T>({
     url,
     params,
     type = 'get',
-  }: ApiRequestType) => {
+    requestType = 'normal',
+  }: ApiRequestType & { requestType?: RequestHeaderType }) => {
     try {
-      const result = await apiUtils.request<T>({
+      const result = await getRequestFn(requestType)<T>({
         url,
         params,
-        // token,
+        token,
         type,
       });
 
@@ -47,19 +55,21 @@ const useRequest = () => {
     } catch (err) {
       if (err.status === 401) {
         try {
-          // const { access_token: newAccessToken } = await refreshFn();
-          // const result = await apiUtils.request<T>({
-          //   url,
-          //   params,
-          //   token: newAccessToken,
-          //   type,
-          // });
-          // return result.data;
+          const { access_token: newAccessToken } = await refreshFn();
+
+          const result = await getRequestFn(requestType)<T>({
+            url,
+            params,
+            token: newAccessToken,
+            type,
+          });
+
+          return result.data;
         } catch (err2) {
-          // if (!refreshRequest && err2.status === 401) {
-          //   setRefreshRequest(true);
-          //   refreshTokenDeniedFn();
-          // }
+          if (!refreshRequest && err2.status === 401) {
+            setRefreshRequest(true);
+            refreshTokenDeniedFn();
+          }
         }
       } else {
         console.log('@@@@', err);
@@ -68,7 +78,7 @@ const useRequest = () => {
     }
   };
 
-  return requestFn;
+  return executeRequest;
 };
 
 export default useRequest;

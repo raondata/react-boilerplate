@@ -5,3 +5,5 @@ export type ApiRequestType = {
   url: string;
   params?: { [key: string]: any };
 };
+
+export type RequestHeaderType = 'normal' | 'login' | 'multipart';
