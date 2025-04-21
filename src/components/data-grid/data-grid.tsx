@@ -1,15 +1,26 @@
-import { Box } from '@chakra-ui/react';
-import { ColDef } from 'ag-grid-community';
+import { Box, Center, Progress, Text } from '@chakra-ui/react';
+import type { ColDef } from 'ag-grid-community';
+import {
+  ClientSideRowModelModule,
+  CsvExportModule,
+  ModuleRegistry,
+  provideGlobalGridOptions,
+  RowSelectionModule,
+  themeQuartz,
+  ValidationModule,
+} from 'ag-grid-community';
 import { AgGridReact } from 'ag-grid-react';
-import React, { LegacyRef, ReactElement, useEffect, useState } from 'react';
+import type { LegacyRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import type { DataGridPropsType } from '@@types/client-types';
 
-type DataGridPropsType<T> = {
-  cols: ColDef[];
-  rowData: T[];
-  rowSelection?: 'multiRow' | 'singleRow';
-  onRowClicked?: (clicked: T) => void;
-  ref?: LegacyRef<AgGridReact<T>>;
-};
+provideGlobalGridOptions({ theme: themeQuartz });
+ModuleRegistry.registerModules([
+  ClientSideRowModelModule,
+  ValidationModule,
+  RowSelectionModule,
+  CsvExportModule,
+]);
 
 const InnerDataGrid = <T,>(
   {
@@ -17,6 +28,7 @@ const InnerDataGrid = <T,>(
     rowData,
     rowSelection,
     onRowClicked,
+    isLoading,
   }: // ref,
   DataGridPropsType<T>,
   ref: LegacyRef<AgGridReact<T>>
@@ -26,33 +38,60 @@ const InnerDataGrid = <T,>(
   {
     const [$rowData, $setRowData] = useState<T[]>([]);
     const [$columnDefs, $setColumnDefs] = useState<ColDef[]>([]);
+    const selectedRowIndex = useRef<number>(-1);
 
     useEffect(() => {
       if (cols) {
         $setColumnDefs([...cols]);
       }
+    }, [cols]);
 
+    useEffect(() => {
       if (rowData) {
         $setRowData([...rowData]);
       }
-    }, [cols, rowData]);
+    }, [rowData]);
 
     return (
-      <Box w="full" h="full">
+      <Box w="full" h="full" pos="relative">
+        {isLoading === true && (
+          <Center
+            w="full"
+            h="full"
+            pos="absolute"
+            left={0}
+            top={0}
+            bg="white"
+            flexDir={'column'}
+            gap={4}
+          >
+            <Text>Loading</Text>
+            <Box w={20} rounded={'xl'} overflow={'hidden'}>
+              <Progress size="sm" isIndeterminate ringColor={'point.400'} />
+            </Box>
+          </Center>
+        )}
         <AgGridReact<T>
           ref={ref}
           columnDefs={$columnDefs}
           rowData={$rowData}
           rowSelection={
-            rowSelection && {
-              mode: rowSelection,
-            }
+            rowSelection === 'singleRow' ? 'single' : { mode: 'multiRow' }
           }
-          onRowSelected={(e) => {
-            console.log('###', e);
+          gridOptions={{
+            enableCellTextSelection: true,
           }}
           onRowClicked={(e) => {
-            onRowClicked && onRowClicked(e.data!);
+            if (selectedRowIndex.current === e.rowIndex) {
+              // selectedRowIndex.current = -1;
+              // e.api.deselectAll();
+              // if (onRowClicked) onRowClicked(undefined);
+            } else {
+              if (e.rowIndex !== null) {
+                selectedRowIndex.current = e.rowIndex;
+              }
+              if (onRowClicked) onRowClicked(e.data);
+            }
           }}
         />
       </Box>
