@@ -18,7 +18,7 @@ export default defineConfig((configEnv) => {
     base: baseUrl,
     plugins: [react(), svgr()],
     server: {
-      port: 3000,
+      port: 4050,
     },
     test: {
       globals: true,
