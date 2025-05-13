@@ -53,7 +53,7 @@ const useRequest = () => {
 
       return result.data;
     } catch (err) {
-      if (err.status === 401) {
+      if (err.status === 401 && requestType !== 'login') {
         try {
           const { access_token: newAccessToken } = await refreshFn();
 

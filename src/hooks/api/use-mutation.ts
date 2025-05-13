@@ -1,8 +1,10 @@
-import { useMutation } from 'react-query';
+import { useMutation } from '@tanstack/react-query';
 import useRequest from './use-request';
 import { RequestHeaderType } from '@@types/request-types';
+import { useState } from 'react';
 
-type Type = { [key: string]: any } | undefined;
+type ParamType = { [key: string]: any } | void;
+
 const useMyMutation = <T>(
   {
     type = 'get',
@@ -14,14 +16,31 @@ const useMyMutation = <T>(
   options?: { requestType?: RequestHeaderType }
 ) => {
   const requestFn = useRequest();
-  const { mutateAsync, isLoading } = useMutation<T, Error, Type>({
+  const [isLoading, setIsLoading] = useState(false);
+  const { mutateAsync, mutate } = useMutation<T | undefined, Error, ParamType>({
     // queryKey: [type, url, JSON.stringify(params)],
     // mutationKey: [type, url, JSON.stringify(params)],
-    mutationFn: async (params) =>
-      requestFn<T>({ url, params, type, requestType: options?.requestType }),
+    mutationFn: async (params?: ParamType) => {
+      setIsLoading(true);
+
+      try {
+        const result = await requestFn<T | undefined>({
+          url,
+          params: params || {},
+          type,
+          requestType: options?.requestType,
+        });
+
+        return result;
+      } catch (error) {
+        throw error;
+      } finally {
+        setIsLoading(false);
+      }
+    },
   });
 
-  return { mutateAsync, isLoading };
+  return { mutateAsync, mutate, isLoading };
 };
 
 export default useMyMutation;

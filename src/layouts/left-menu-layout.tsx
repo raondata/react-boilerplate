@@ -19,6 +19,9 @@ const LeftMenuLayout = ({ children }: { children?: ReactNode }) => {
       bg="bg"
       justifyContent={'center'}
       w="full"
+      maxW="full"
+      overflowX={'hidden'}
+      pos={'relative'}
       flexDir={'row'}
       p={4}
       pr={0}
@@ -26,7 +29,7 @@ const LeftMenuLayout = ({ children }: { children?: ReactNode }) => {
       minH={`768px`}
     >
       <Flex pos="relative" h="full" w="full">
-        <Flex flex={1} h="full">
+        <Flex flex={1} w="full" h="full">
           <Flex
             flexDir={'row'}
             id="left-layout-header"
@@ -45,9 +48,16 @@ const LeftMenuLayout = ({ children }: { children?: ReactNode }) => {
             )}
             <Image w={`auto`} h={5} src={Logo} />
           </Flex>
-          <Flex w="full" h="full" gap={4} flexDir={'row'} overflow={'hidden'}>
+          <Flex w="full" h="full" gap={4} flexDir={'row'} overflow={'auto'}>
             <LeftSideMenu />
-            <Flex flex={1} rounded={'md'} h="full">
+            <Flex
+              flex={1}
+              rounded={'md'}
+              h="full"
+              flexShrink={1}
+              w="full"
+              overflowX={'hidden'}
+            >
               <Box h="full" overflow={'auto'} pr={4}>
                 {children ? children : <Outlet />}
               </Box>

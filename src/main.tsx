@@ -9,8 +9,7 @@ import {
 } from 'react-router-dom';
 import LeftMenuLayout from '@layouts/left-menu-layout';
 import NotFoundPage from '@pages/not-found-page';
-import { QueryClient, QueryClientProvider } from 'react-query';
-import MainPage from '@pages/main-page';
+import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 import ErrorPage from '@pages/error-page';
 import extendedTheme from '@configs/chakra-config';
 import { mainMenuRouteConfig } from '@configs/route-config';

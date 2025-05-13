@@ -4,6 +4,7 @@ import MarkdownPreview from '@uiw/react-markdown-preview';
 const MdBox = ({ source }: { source: string }) => {
   return (
     <Box
+      w={'full'}
       rounded={'md'}
       overflow={'hidden'}
       border={`1px solid`}

@@ -1,4 +1,4 @@
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import useRequest from './use-request';
 
 const useMyQuery = <T>(
@@ -15,7 +15,7 @@ const useMyQuery = <T>(
 ) => {
   const requestFn = useRequest();
 
-  const { data, isLoading, error, isError } = useQuery({
+  const { data, isLoading, error, isError, refetch } = useQuery({
     queryKey: [type, url, JSON.stringify(params)],
     queryFn: async () => requestFn<T>({ url, type, params }),
     retry: false,
@@ -23,7 +23,7 @@ const useMyQuery = <T>(
     enabled: options?.disabled !== true,
   });
 
-  return { data, isLoading, error, isError };
+  return { data, isLoading, error, isError, refetch };
 };
 
 export default useMyQuery;

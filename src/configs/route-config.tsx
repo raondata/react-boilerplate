@@ -10,6 +10,7 @@ import { IoText } from 'react-icons/io5';
 import { RouteObject } from 'react-router';
 import DirectoryPage from '@pages/directory-page';
 import DefaultSettingPage from '@pages/default-setting-page';
+import ApiPage from '@pages/api-page';
 
 const mainMenuRouteConfig: {
   path: string;
@@ -67,10 +68,10 @@ const mainMenuRouteConfig: {
     element: <MainPage />,
   },
   {
-    name: 'API 설정',
+    name: 'API 호출',
     path: '/api',
     icon: MdOutlineHttp,
-    element: <MainPage />,
+    element: <ApiPage />,
   },
 ];
 

@@ -63,7 +63,7 @@ const loginRequest = async <T>({
   let $data = {};
 
   $data = { ...params };
-  return await api.request<T>({
+  const result = await api.request<T>({
     url: $url,
     method: 'post',
     data: $data,
@@ -71,6 +71,8 @@ const loginRequest = async <T>({
       'Content-Type': 'application/x-www-form-urlencoded',
     },
   });
+
+  return result;
 };
 
 export default { request, multipartRequest, loginRequest };

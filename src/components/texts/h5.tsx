@@ -5,8 +5,8 @@ const H5 = (props: TextProps) => {
     <Text
       as="span"
       fontSize={{
-        base: 'xs',
-        sm: 'medium',
+        base: '2xs',
+        sm: 'xs',
       }}
       {...props}
     ></Text>

@@ -13,7 +13,7 @@ ${'```'}
 `;
 const executeMd = ` 
 ${'```'}
-yarn dev
+yarn start
 ${'```'}
 `;
 

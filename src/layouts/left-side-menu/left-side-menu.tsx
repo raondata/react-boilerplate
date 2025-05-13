@@ -6,7 +6,7 @@ import { mainMenuRouteConfig } from '@configs/route-config';
 
 const LeftSideMenu = () => {
   return (
-    <Box pos="relative" h={'full'} rounded={'md'} bg="gray.700">
+    <Box pos="relative" h={'full'} rounded={'md'} bg="gray.700" flexShrink={1}>
       <Flex h="full" p={4} px={0} color="gray.50" gap={4}>
         <Flex flexDir={'column'} alignItems={'flex-start'} px={4}>
           <H3 fontWeight={'black'}>React Boilerplate</H3>
