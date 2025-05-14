@@ -7,48 +7,50 @@ import { H3 } from '@components/texts';
 import apiUtils from '@utils/api-utils';
 import { CustomerType } from '@@types/field-types';
 import { TokenResponseType } from '@@types/response-types';
+import { useAtom } from 'jotai';
+import { accessTokenAtom, refreshTokenAtom } from '@atoms/global-atom';
+import { useLocation } from 'react-router';
 
 const TokenProvider = ({ children }: { children: ReactNode }) => {
-  const token = useToken();
+  const [accessToken, setAccessToken] = useAtom(accessTokenAtom);
+  const [refreshToken, setRefreshToken] = useAtom(refreshTokenAtom);
+  const { pathname } = useLocation();
   // const token = pathname.split('/').pop();
 
-  const [response, setResponse] = useState<TokenResponseType>();
+  const { data, refetch, isLoading, isError, error } =
+    useQuery<TokenResponseType>(
+      {
+        type: 'post',
+        url: '/forever',
+      },
+      {
+        disabled: !!accessToken,
+      }
+    );
+
+  const getMe = useQuery<{ [key: string]: any }>({
+    type: 'get',
+    url: '/me',
+  });
+  useEffect(() => {
+    if (data?.accessToken && data?.refreshToken) {
+      setAccessToken(data.accessToken);
+      setRefreshToken(data.refreshToken);
+    }
+  }, [data]);
 
   useEffect(() => {
-    if (token) {
-      apiUtils
-        .get<TokenResponseType>({
-          url: '/token-check',
-          token,
-        })
-        .then((res) => {
-          setResponse(res.data);
-        })
-        .catch((e) => {
-          throw new Error('token not found');
-        });
-    } else {
-      throw new Error('token not found');
-    }
-  }, [token]);
-
-  useEffect(() => {
-    if (!token) {
-      // throw new Error('token not found');
-    }
-  }, [token]);
+    getMe.refetch();
+  }, [pathname]);
 
   return (
-    <TokenContext.Provider
-      value={{ token: token || '', customerInfo: response }}
-    >
-      {!response ? (
+    <TokenContext.Provider value={{ accessToken, userInfo: {} }}>
+      {getMe.isLoading && (
         <Center w="full" h="100vh">
           <H3>불러오는 중입니다...</H3>
         </Center>
-      ) : (
-        <>{children}</>
       )}
+      {getMe.data && !getMe.isLoading && <>{children}</>}
     </TokenContext.Provider>
   );
 };

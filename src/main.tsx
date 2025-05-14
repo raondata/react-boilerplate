@@ -13,6 +13,7 @@ import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 import ErrorPage from '@pages/error-page';
 import extendedTheme from '@configs/chakra-config';
 import { mainMenuRouteConfig } from '@configs/route-config';
+import { TokenProvider } from '@providers/token-provider';
 
 const queryClient = new QueryClient();
 const basename = import.meta.env.VITE_BASE_URL;
@@ -22,7 +23,9 @@ const router = createBrowserRouter(
       path: `/`,
       element: (
         <QueryClientProvider client={queryClient}>
-          <LeftMenuLayout />
+          <TokenProvider>
+            <LeftMenuLayout />
+          </TokenProvider>
         </QueryClientProvider>
       ),
       errorElement: (

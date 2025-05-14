@@ -11,3 +11,8 @@ export type PagingResponseType<T> = {
   size: number;
   total: number;
 };
+
+export type TokenResponseType = {
+  accessToken?: string;
+  refreshToken?: string;
+};

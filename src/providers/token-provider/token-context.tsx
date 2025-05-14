@@ -2,10 +2,10 @@ import { TokenResponseType } from '@@types/response-types';
 import { createContext } from 'react';
 
 const TokenContext = createContext<{
-  token: string;
-  customerInfo?: TokenResponseType;
+  accessToken: string;
+  userInfo?: TokenResponseType;
 }>({
-  token: '',
+  accessToken: '',
 });
 
 export default TokenContext;
