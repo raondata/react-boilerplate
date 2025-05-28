@@ -2,7 +2,7 @@ import MainPage from '@pages/main-page';
 import { IconType } from 'react-icons/lib';
 import { FaCheck, FaCode, FaImage, FaLayerGroup } from 'react-icons/fa6';
 import { FiLayout } from 'react-icons/fi';
-import { MdOutlineHttp } from 'react-icons/md';
+import { MdDashboard, MdOutlineHttp } from 'react-icons/md';
 import { CiSettings } from 'react-icons/ci';
 import { HiOutlineDocumentDuplicate } from 'react-icons/hi2';
 import { LuFolderTree } from 'react-icons/lu';
@@ -11,6 +11,10 @@ import { RouteObject } from 'react-router';
 import DirectoryPage from '@pages/directory-page';
 import DefaultSettingPage from '@pages/default-setting-page';
 import ApiPage from '@pages/api-page';
+import { GrDashboard } from 'react-icons/gr';
+import DashboardPage from '@pages/dashboard-page';
+import { DashboardProvider } from '@raondata/dashboard-module';
+import { dashboardConfig } from './dashboard-config';
 
 const mainMenuRouteConfig: {
   path: string;
@@ -72,6 +76,16 @@ const mainMenuRouteConfig: {
     path: '/api',
     icon: MdOutlineHttp,
     element: <ApiPage />,
+  },
+  {
+    name: '대시보드 설계',
+    path: '/dashboard',
+    icon: MdDashboard,
+    element: (
+      <DashboardProvider items={dashboardConfig.items}>
+        <DashboardPage />
+      </DashboardProvider>
+    ),
   },
 ];
 

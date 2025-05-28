@@ -46,6 +46,7 @@
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
     "@heroicons/react": "2.0.18",
+    "@raondata/dashboard-module": "^0.0.8",
     "@tanstack/react-query": "^5.75.7",
     "@types/react-slick": "^0.23.13",
     "@uiw/react-markdown-preview": "^5.1.3",
