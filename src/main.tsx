@@ -14,11 +14,20 @@ import ErrorPage from '@pages/error-page';
 import extendedTheme from '@configs/chakra-config';
 import { mainMenuRouteConfig } from '@configs/route-config';
 import { TokenProvider } from '@providers/token-provider';
+import LoginPage from '@pages/login-page';
 
 const queryClient = new QueryClient();
 const basename = import.meta.env.VITE_BASE_URL;
 const router = createBrowserRouter(
   [
+    {
+      path: '/auth/login',
+      element: (
+        <QueryClientProvider client={queryClient}>
+          <LoginPage />
+        </QueryClientProvider>
+      ),
+    },
     {
       path: `/`,
       element: (
