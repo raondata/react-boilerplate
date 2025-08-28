@@ -8,6 +8,7 @@ const H2 = (props: TextProps) => {
       xs: '2xl',
       sm: '2xl',
     },
+    fontWeight: 'semibold',
     ...props,
   };
   return <Text {...$props}></Text>;

@@ -6,6 +6,7 @@ const H5 = (props: TextProps) => {
       base: '2xs',
       sm: 'xs',
     },
+    fontWeight: 'normal',
     ...props,
   };
   return <Text as="span" {...$props}></Text>;

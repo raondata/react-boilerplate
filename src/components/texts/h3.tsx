@@ -8,6 +8,7 @@ const H3 = (props: TextProps) => {
       xs: '1.125rem',
       sm: 'x-large',
     },
+    fontWeight: 'medium',
     ...props,
   };
   return <Text as={'span'} {...$props}></Text>;
