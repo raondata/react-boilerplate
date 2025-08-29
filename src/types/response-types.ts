@@ -1,7 +1,7 @@
 export type AuthResponseType = {
-  access_token: string;
-  refresh_token: string;
-  token_type?: 'bearer';
+  accessToken: string;
+  refreshToken: string;
+  tokenType?: 'bearer';
 };
 
 export type PagingResponseType<T> = {

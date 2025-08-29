@@ -19,8 +19,13 @@ import { IoEye, IoEyeOff } from 'react-icons/io5';
 import Logo from '@assets/logo.png';
 import { useMutation } from '@hooks/api';
 import { useAtom } from 'jotai';
-import { accessTokenAtom, refreshTokenAtom } from '@atoms/global-atom';
+import {
+  accessTokenAtom,
+  refreshTokenAtom,
+  userInfoAtom,
+} from '@atoms/global-atom';
 import { useNavigate } from 'react-router';
+import { TOAST_IDS } from '@configs/toast-config';
 
 interface LoginRequest {
   username: string;
@@ -30,6 +35,7 @@ interface LoginRequest {
 interface LoginResponse {
   accessToken: string;
   refreshToken: string;
+  userInfo?: any; // 로그인 응답에 사용자 정보가 포함될 수 있음
 }
 
 const LoginPage = () => {
@@ -38,6 +44,7 @@ const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [, setAccessToken] = useAtom(accessTokenAtom);
   const [, setRefreshToken] = useAtom(refreshTokenAtom);
+  const [, setUserInfo] = useAtom(userInfoAtom);
   const toast = useToast();
   const navigate = useNavigate();
 
@@ -52,6 +59,7 @@ const LoginPage = () => {
   const handleLogin = async () => {
     if (!username || !password) {
       toast({
+        id: TOAST_IDS.LOGIN_INPUT_ERROR,
         title: '입력 오류',
         description: '아이디와 비밀번호를 모두 입력해주세요.',
         status: 'warning',
@@ -70,7 +78,14 @@ const LoginPage = () => {
       if (result && result.accessToken && result.refreshToken) {
         setAccessToken(result.accessToken);
         setRefreshToken(result.refreshToken);
+
+        // 로그인 응답에 사용자 정보가 포함되어 있으면 저장 (선택적)
+        if (result.userInfo) {
+          setUserInfo(result.userInfo);
+        }
+
         toast({
+          id: TOAST_IDS.LOGIN_SUCCESS,
           title: '로그인 성공',
           description: '환영합니다!',
           status: 'success',
@@ -82,6 +97,7 @@ const LoginPage = () => {
       }
     } catch (error) {
       toast({
+        id: TOAST_IDS.LOGIN_FAILED,
         title: '로그인 실패',
         description: '아이디 또는 비밀번호를 확인해주세요.',
         status: 'error',

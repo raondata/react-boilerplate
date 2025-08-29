@@ -5,6 +5,7 @@ import { FaNodeJs, FaReact } from 'react-icons/fa6';
 import { SiTypescript } from 'react-icons/si';
 import { LiaYarn } from 'react-icons/lia';
 import MdBox from '@components/md-box';
+import { useQuery } from '@hooks/api';
 
 const installMd = `
 ${'```'}
@@ -18,6 +19,16 @@ ${'```'}
 `;
 
 const MainPage = () => {
+  const aa = useQuery({
+    url: '/aa1',
+  });
+  const bb = useQuery({
+    url: '/aa2',
+  });
+  const cc = useQuery({
+    url: '/aa3',
+  });
+
   return (
     <Flex gap={4}>
       <H1>Raondata Boilerplate 소개</H1>

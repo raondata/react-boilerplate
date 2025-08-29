@@ -20,8 +20,8 @@ const useToken = () => {
     });
 
     // const result = await mutateAsync({});
-    setAccessToken(result.data.access_token);
-    setRefreshToken(result.data.refresh_token);
+    setAccessToken(result.data.accessToken);
+    setRefreshToken(result.data.refreshToken);
 
     return result.data;
   };

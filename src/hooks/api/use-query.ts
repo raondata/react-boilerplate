@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import useRequest from './use-request';
 import formatUtils from '@utils/format-utils';
+import { useApiContext } from '@providers/api-provider';
 
 const useMyQuery = <T>(
   {
@@ -15,6 +16,9 @@ const useMyQuery = <T>(
   options?: { disabled?: boolean }
 ) => {
   const requestFn = useRequest();
+
+  // Single-flight 방식으로 모든 API 자유롭게 호출
+  const shouldEnable = options?.disabled !== true;
 
   const {
     data,
@@ -34,7 +38,7 @@ const useMyQuery = <T>(
       }),
     retry: false,
     refetchOnWindowFocus: false,
-    enabled: options?.disabled !== true,
+    enabled: shouldEnable,
   });
 
   return {
