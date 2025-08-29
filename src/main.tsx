@@ -16,6 +16,7 @@ import { mainMenuRouteConfig } from '@configs/route-config';
 import { TokenProvider } from '@providers/token-provider';
 import { ApiProvider } from '@providers/api-provider';
 import LoginPage from '@pages/login-page';
+import TopMenuLayout from '@layouts/top-menu-layout';
 
 const queryClient = new QueryClient();
 const basename = import.meta.env.VITE_BASE_URL;
@@ -35,7 +36,7 @@ const router = createBrowserRouter(
         <QueryClientProvider client={queryClient}>
           <ApiProvider>
             <TokenProvider>
-              <LeftMenuLayout />
+              <TopMenuLayout />
             </TokenProvider>
           </ApiProvider>
         </QueryClientProvider>
