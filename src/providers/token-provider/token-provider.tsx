@@ -35,7 +35,7 @@ const TokenProvider = ({ children }: { children: ReactNode }) => {
   }, [accessToken, refreshRequest, navigate, pathname, isMeLoaded]);
 
   // 토큰이 없고 갱신 중이 아니면 아무것도 렌더링하지 않음 (리다이렉트 처리 중)
-  console.log('--> ', accessToken, refreshRequest);
+
   if (!accessToken && !refreshRequest) {
     return null;
   }
