@@ -20,13 +20,13 @@ ${'```'}
 
 const MainPage = () => {
   const aa = useQuery({
-    url: '/aa1',
+    url: '/test/hello',
   });
   const bb = useQuery({
-    url: '/aa2',
+    url: '/test/1',
   });
   const cc = useQuery({
-    url: '/aa3',
+    url: '/test/3',
   });
 
   return (

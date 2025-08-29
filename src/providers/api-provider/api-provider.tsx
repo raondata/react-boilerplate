@@ -24,14 +24,7 @@ const ApiProvider = ({ children }: { children: ReactNode }) => {
 
   // 초기화 시 기존 사용자 정보 확인
   useEffect(() => {
-    console.log('📊 ApiProvider 상태:', {
-      accessToken: !!accessToken,
-      userInfo: !!userInfo,
-      isMeLoaded,
-    });
-
     if (!accessToken && isMeLoaded) {
-      console.log('❌ 토큰 없음 - isMeLoaded = false 설정');
       setIsMeLoaded(false);
       // 사용자 정보 초기화는 로그아웃 시에만 수행
       // setUserInfo(null); // 임시로 주석 처리하여 문제 해결
