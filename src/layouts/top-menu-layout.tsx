@@ -97,7 +97,6 @@ const TopMenuLayout = ({ children }: { children?: ReactNode }) => {
       >
         <HStack w="full" alignItems="center" gap={3}>
           <Image w={`auto`} h={6} src={Logo} />
-          {pagename && <H2 fontWeight={'black'}>[{pagename}]</H2>}
         </HStack>
         <Button
           variant="ghost"
@@ -211,9 +210,14 @@ const TopMenuLayout = ({ children }: { children?: ReactNode }) => {
 
       {/* Right Side Menu Drawer */}
       <Drawer isOpen={isOpen} placement="right" onClose={onClose} size="xs">
-        <DrawerOverlay />
+        <DrawerOverlay onClick={onClose} />
         <DrawerContent>
-          <DrawerCloseButton />
+          <DrawerCloseButton
+            onClick={onClose}
+            size="lg"
+            color="gray.500"
+            _hover={{ color: 'gray.700' }}
+          />
           <DrawerHeader borderBottomWidth="1px">내 메뉴</DrawerHeader>
           <DrawerBody>
             <VStack spacing={4} align="stretch"></VStack>
