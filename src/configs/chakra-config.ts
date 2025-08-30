@@ -19,6 +19,13 @@ const extendedTheme = extendTheme({
       900: '#00555E',
     },
   },
+  components: {
+    Toast: {
+      defaultProps: {
+        position: 'top',
+      },
+    },
+  },
 });
 
 export default extendedTheme;

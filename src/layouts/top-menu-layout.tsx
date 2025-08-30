@@ -6,6 +6,13 @@ import {
   Icon,
   Image,
   VStack,
+  Drawer,
+  DrawerBody,
+  DrawerHeader,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
+  useDisclosure,
 } from '@chakra-ui/react';
 import { H2, H4 } from '@components/texts';
 import { useRouteConfig } from '@hooks/route';
@@ -14,7 +21,7 @@ import { Outlet, useLocation } from 'react-router';
 import Logo from '@assets/logo.png';
 import { mainMenuRouteConfig } from '@configs/route-config';
 import { Link } from 'react-router-dom';
-import { FaChevronLeft, FaChevronRight } from 'react-icons/fa6';
+import { FaChevronLeft, FaChevronRight, FaBars } from 'react-icons/fa6';
 
 const TopMenuLayout = ({ children }: { children?: ReactNode }) => {
   const { pathname } = useLocation();
@@ -22,6 +29,7 @@ const TopMenuLayout = ({ children }: { children?: ReactNode }) => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -87,10 +95,19 @@ const TopMenuLayout = ({ children }: { children?: ReactNode }) => {
         bg="white"
         shadow="sm"
       >
-        <HStack w="full" alignItems="flex-start" gap={3}>
-          <Image w={`auto`} h={8} src={Logo} />
+        <HStack w="full" alignItems="center" gap={3}>
+          <Image w={`auto`} h={6} src={Logo} />
           {pagename && <H2 fontWeight={'black'}>[{pagename}]</H2>}
         </HStack>
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={onOpen}
+          p={2}
+          _hover={{ bg: 'gray.100' }}
+        >
+          <Icon as={FaBars} w={5} h={5} />
+        </Button>
       </HStack>
       <HStack
         id="top-layout-menu-bar"
@@ -191,6 +208,18 @@ const TopMenuLayout = ({ children }: { children?: ReactNode }) => {
           {children ? children : <Outlet />}
         </Box>
       </Flex>
+
+      {/* Right Side Menu Drawer */}
+      <Drawer isOpen={isOpen} placement="right" onClose={onClose} size="xs">
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerCloseButton />
+          <DrawerHeader borderBottomWidth="1px">내 메뉴</DrawerHeader>
+          <DrawerBody>
+            <VStack spacing={4} align="stretch"></VStack>
+          </DrawerBody>
+        </DrawerContent>
+      </Drawer>
     </VStack>
   );
 };

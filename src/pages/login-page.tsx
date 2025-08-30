@@ -65,6 +65,7 @@ const LoginPage = () => {
         status: 'warning',
         duration: 3000,
         isClosable: true,
+        position: 'top',
       });
       return;
     }
@@ -91,6 +92,7 @@ const LoginPage = () => {
           status: 'success',
           duration: 3000,
           isClosable: true,
+          position: 'top',
         });
         // 로그인 성공 후 메인 페이지로 이동
         navigate('/');
@@ -103,6 +105,7 @@ const LoginPage = () => {
         status: 'error',
         duration: 3000,
         isClosable: true,
+        position: 'top',
       });
     }
   };
